@@ -3,7 +3,7 @@ import { ItemKindService } from './item-kind.service';
 import { CreateItemKindDto } from './dto/create-item-kind.dto';
 import { UpdateItemKindDto } from './dto/update-item-kind.dto';
 
-@Controller('item-kind')
+@Controller('kind')
 export class ItemKindController {
   constructor(private readonly itemKindService: ItemKindService) {}
 
