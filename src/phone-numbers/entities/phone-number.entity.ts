@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('item-type')
+@Entity('phone')
 export class PhoneNumberEntity {
 
     @PrimaryGeneratedColumn()

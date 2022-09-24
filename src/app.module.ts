@@ -1,15 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+// import * as Joi from '@hapi/joi';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service'
-
-import { ItemEntity } from './item/entities/item.entity';
-import { ItemTypeEntity } from './item-type/entities/item-type.entity';
-import { ItemSubTypeEntity } from './item-subtype/entities/item-subtype.entity';
-import { ItemKindEntity } from './item-kind/entities/item-kind.entity';
-import { ItemStyleEntity } from './item-style/entities/item-style.entity';
 
 import { ItemModule } from './item/item.module';
 import { ItemTypeModule } from './item-type/item-type.module';
@@ -19,30 +13,24 @@ import { ItemStyleModule } from './item-style/item-style.module';
 
 import { PhoneNumbersModule } from './phone-numbers/phone-numbers.module';
 import { PhotoGalleryModule } from './photo-gallery/photo-gallery.module';
-
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 
+import { DBModule } from './db.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5000,
-      username: 'postgres',
-      password: 'output44w',
-      database: 'drugayamebel2',
-      entities: [
-        ItemEntity,
-        ItemTypeEntity,
-        ItemSubTypeEntity,
-        ItemKindEntity,
-        ItemStyleEntity,
-      ],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true, 
+      // validationSchema: Joi.object({
+      //   PG_HOST: Joi.string().required(),
+      //   PG_PORT: Joi.number().required(),
+      //   PG_USERNAME: Joi.string().required(),
+      //   PG_PASS: Joi.string().required(),
+      //   PG_DBNAME: Joi.string().required(),
+      // })
     }),
+    DBModule,
     ItemModule,
     ItemTypeModule,
     ItemSubtypeModule,
@@ -56,4 +44,6 @@ import { AdminModule } from './admin/admin.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule { }
+

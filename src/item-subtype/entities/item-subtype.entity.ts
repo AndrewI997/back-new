@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ItemEntity } from 'src/item/entities/item.entity';
 
-@Entity('item-sub-type')
+@Entity('subtype')
 export class ItemSubTypeEntity {
     
   @PrimaryGeneratedColumn()

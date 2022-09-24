@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { ItemEntity } from 'src/item/entities/item.entity';
 
-@Entity('item-style')
+@Entity('style')
 export class ItemStyleEntity {
     
   @PrimaryGeneratedColumn()
