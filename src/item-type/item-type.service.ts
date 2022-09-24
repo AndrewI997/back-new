@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpCode, HttpStatus  } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateItemTypeDto } from './dto/create-item-type.dto';
 import { UpdateItemTypeDto } from './dto/update-item-type.dto';
+import { ItemTypeEntity } from './entities/item-type.entity';
 
 @Injectable()
 export class ItemTypeService {
-  create(createItemTypeDto: CreateItemTypeDto) {
-    return 'This action adds a new itemType';
+
+  constructor(
+    @InjectRepository(ItemTypeEntity)
+    private repository: Repository<ItemTypeEntity>,
+  ) { }
+
+  async create(CreateItemTypeDto: CreateItemTypeDto) {
+    await this.repository.save(CreateItemTypeDto);
   }
 
   findAll() {
-    return `This action returns all itemType`;
+    return this.repository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} itemType`;
+    return this.repository.findOne({where: {
+      id: id
+  }});
   }
 
-  update(id: number, updateItemTypeDto: UpdateItemTypeDto) {
-    return `This action updates a #${id} itemType`;
+  async update(id: number, UpdateItemTypeDto: UpdateItemTypeDto) {
+    const item = this.findOne(id)
+    if (item) {
+      await this.repository.update(id, UpdateItemTypeDto);
+    } else {
+      throw new HttpException('', HttpStatus.BAD_REQUEST)
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} itemType`;
+  async remove(id: number) {
+    await this.repository.delete(id);
   }
 }

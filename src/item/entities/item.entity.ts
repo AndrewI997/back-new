@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Index } from 'typeorm';
 
 import { ItemTypeEntity } from 'src/item-type/entities/item-type.entity';
 import { ItemSubTypeEntity } from 'src/item-subtype/entities/item-subtype.entity';
@@ -22,21 +22,20 @@ export class ItemEntity {
     @Column({ nullable: true })
     description?: string;
 
+    @Index('typeId')
     @ManyToOne(() => ItemTypeEntity, type => type.id)
-    @JoinColumn({ name: "typeId" })
     type: ItemTypeEntity
 
-    
+    @Index('subTypeId')
     @ManyToOne(() => ItemSubTypeEntity, subType => subType.id)
-    @JoinColumn({ name: "subTypeId" })
     subType: ItemSubTypeEntity
 
-    @ManyToOne(() => ItemStyleEntity, style => style.id)
-    @JoinColumn({ name: "styleId" })
-    style: ItemStyleEntity
-
+    @Index('kindId')
     @ManyToOne(() => ItemKindEntity, kind => kind.id, { nullable: true })
-    @JoinColumn({ name: "kindId" })
     kind: ItemKindEntity
+
+    @Index('styleId')
+    @ManyToOne(() => ItemStyleEntity, style => style.id)
+    style: ItemStyleEntity
 
 }

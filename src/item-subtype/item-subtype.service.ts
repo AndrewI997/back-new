@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpCode, HttpStatus  } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateItemSubtypeDto } from './dto/create-item-subtype.dto';
 import { UpdateItemSubtypeDto } from './dto/update-item-subtype.dto';
+import { ItemSubTypeEntity } from './entities/item-subtype.entity';
 
 @Injectable()
-export class ItemSubtypeService {
-  create(createItemSubtypeDto: CreateItemSubtypeDto) {
-    return 'This action adds a new itemSubtype';
+export class ItemSubTypesService {
+  constructor(
+    @InjectRepository(ItemSubTypeEntity)
+    private repository: Repository<ItemSubTypeEntity>,
+  ) { }
+
+  async create(CreateItemSubTypeDto: CreateItemSubtypeDto) {
+    await this.repository.save(CreateItemSubTypeDto);
   }
 
   findAll() {
-    return `This action returns all itemSubtype`;
+    return this.repository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} itemSubtype`;
+    return this.repository.findOne({where: {
+      id: id
+  }});
   }
 
-  update(id: number, updateItemSubtypeDto: UpdateItemSubtypeDto) {
-    return `This action updates a #${id} itemSubtype`;
+  async update(id: number, UpdateItemSubTypeDto: UpdateItemSubtypeDto) {
+    const item = this.findOne(id)
+    if (item) {
+      await this.repository.update(id, UpdateItemSubTypeDto);
+    } else {
+      throw new HttpException('', HttpStatus.BAD_REQUEST)
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} itemSubtype`;
+  async remove(id: number) {
+    await this.repository.delete(id);
   }
 }
