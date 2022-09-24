@@ -22,19 +22,19 @@ export class ItemEntity {
     @Column({ nullable: true })
     description?: string;
 
-    @Index('typeId')
+    @Index()
     @ManyToOne(() => ItemTypeEntity, type => type.id)
     type: ItemTypeEntity
 
-    @Index('subTypeId')
+    @Index()
     @ManyToOne(() => ItemSubTypeEntity, subType => subType.id)
     subType: ItemSubTypeEntity
 
-    @Index('kindId')
+    @Index()
     @ManyToOne(() => ItemKindEntity, kind => kind.id, { nullable: true })
     kind: ItemKindEntity
 
-    @Index('styleId')
+    @Index()
     @ManyToOne(() => ItemStyleEntity, style => style.id)
     style: ItemStyleEntity
 

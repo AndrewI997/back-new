@@ -1,34 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ItemSubTypesService } from './item-subtype.service';
+import { ItemSubtypeService } from './item-subtype.service';
 import { CreateItemSubtypeDto } from './dto/create-item-subtype.dto';
 import { UpdateItemSubtypeDto } from './dto/update-item-subtype.dto';
 
 @Controller('item-sub-type')
-export class ItemSubTypesController {
-  constructor(private readonly itemSubTypesService: ItemSubTypesService) {}
+export class ItemSubtypeController {
+  constructor(private readonly ItemSubtypeService: ItemSubtypeService) {}
 
   @Post()
   create(@Body() createItemSubTypeDto: CreateItemSubtypeDto) {
-    return this.itemSubTypesService.create(createItemSubTypeDto);
+    return this.ItemSubtypeService.create(createItemSubTypeDto);
   }
 
   @Get()
   findAll() {
-    return this.itemSubTypesService.findAll();
+    return this.ItemSubtypeService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.itemSubTypesService.findOne(+id);
+    return this.ItemSubtypeService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateItemSubTypeDto: UpdateItemSubtypeDto) {
-    return this.itemSubTypesService.update(+id, updateItemSubTypeDto);
+    return this.ItemSubtypeService.update(+id, updateItemSubTypeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.itemSubTypesService.remove(+id);
+    return this.ItemSubtypeService.remove(+id);
   }
 }

@@ -6,7 +6,7 @@ import { UpdateItemSubtypeDto } from './dto/update-item-subtype.dto';
 import { ItemSubTypeEntity } from './entities/item-subtype.entity';
 
 @Injectable()
-export class ItemSubTypesService {
+export class ItemSubtypeService {
   constructor(
     @InjectRepository(ItemSubTypeEntity)
     private repository: Repository<ItemSubTypeEntity>,

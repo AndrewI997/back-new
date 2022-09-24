@@ -6,7 +6,7 @@ import { UpdateItemStyleDto } from './dto/update-item-style.dto';
 import { ItemStyleEntity } from './entities/item-style.entity';
 
 @Injectable()
-export class ItemStylesService {
+export class ItemStyleService {
   constructor(
     @InjectRepository(ItemStyleEntity)
     private repository: Repository<ItemStyleEntity>,
