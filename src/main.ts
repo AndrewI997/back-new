@@ -5,9 +5,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  
+  app.enableCors();
 
   const config = app.get<ConfigService>(ConfigService);
-  const port = Number(config.get('SERVER_PORT'))
+  const port = Number(config.get('API_PORT'))
 
   await app.listen(port || 3000);
   console.log('APP ON PORT:' + port + '!!!')

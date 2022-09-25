@@ -3,9 +3,7 @@ export class CreateItemDto {
     
     name: string;
 
-    price: number;
-
-    raiting: number;
+    price?: number;
 
     description?: string;
 
@@ -13,8 +11,8 @@ export class CreateItemDto {
 
     subTypeId: number;
 
-    kindId: number;
+    kindId?: number;
 
-    styleId: number;
+    styleId?: number;
     
 }

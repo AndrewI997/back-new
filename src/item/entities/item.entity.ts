@@ -10,14 +10,11 @@ export class ItemEntity {
     @PrimaryGeneratedColumn()
     id: number;
     
-    @Column()
+    @Column({ nullable: true })
     name: string;
 
     @Column({default: 0})
     price: number;
-
-    @Column({default: 0, nullable: true})
-    raiting: number;
 
     @Column({ nullable: true })
     description?: string;
@@ -35,7 +32,7 @@ export class ItemEntity {
     kind: ItemKindEntity
 
     @Index()
-    @ManyToOne(() => ItemStyleEntity, style => style.id)
+    @ManyToOne(() => ItemStyleEntity, style => style.id, { nullable: true })
     style: ItemStyleEntity
 
 }

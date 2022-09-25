@@ -1,3 +1,7 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { ItemEntity } from './item/entities/item.entity';
 import { ItemTypeEntity } from './item-type/entities/item-type.entity';
 import { ItemSubTypeEntity } from './item-subtype/entities/item-subtype.entity';
@@ -6,13 +10,9 @@ import { ItemStyleEntity } from './item-style/entities/item-style.entity';
 import { PhoneNumberEntity } from './phone-numbers/entities/phone-number.entity';
 import { AdminEntity } from './admin/entities/admin.entity';
 
-import { ConfigModule, ConfigService } from '@nestjs/config';
-
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
-
 @Module({
     imports: [
+        ConfigModule.forRoot(),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
