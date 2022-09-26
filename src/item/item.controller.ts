@@ -5,7 +5,7 @@ import { UpdateItemDto } from './dto/update-item.dto';
 
 
 @Controller('item')
-// @UseInterceptors(CacheInterceptor)
+@UseInterceptors(CacheInterceptor)
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 

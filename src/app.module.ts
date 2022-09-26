@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/common/cache';
+import { ClientOpts } from 'redis';
 // import * as Joi from '@hapi/joi';
 
 import { AppController } from './app.controller';
@@ -29,6 +32,12 @@ import { DBModule } from './db.module';
       //   PG_PASS: Joi.string().required(),
       //   PG_DBNAME: Joi.string().required(),
       // })
+    }),
+    CacheModule.register<ClientOpts>({
+      isGlobal: true,
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
     }),
     DBModule,
     ItemModule,
