@@ -1,6 +1,7 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus, CACHE_MANAGER } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Cache } from 'cache-manager';
 
 import { ItemEntity } from './entities/item.entity'
 import { CreateItemDto } from './dto/create-item.dto';
@@ -11,118 +12,150 @@ export class ItemService {
   constructor(
     @InjectRepository(ItemEntity)
     public repository: Repository<ItemEntity>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
   async create(createItemDto: CreateItemDto) {
     await this.repository.save(createItemDto);
   }
 
-  findAll() {
-    return this.repository.find({
-      relations: {
+  async findAll() {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>()
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        relations: {
           type: true,
           subType: true,
           style: true,
           kind: true
-      },
-  });
-  }
-
-  findOne(item: Partial<CreateItemDto>) {
-    return this.repository.findOne({
-      where: {
-        id: item.id
-      },
-      relations: {
-        type: true,
-        subType: true,
-        style: true,
-        kind: true
+        },
+      });
     }
-    });
   }
 
-  findByType(item: Partial<CreateItemDto>) {
-    return this.repository.find({
-      where: {
-        type: {
-          id: item.typeId
+  async findOne(item: Partial<CreateItemDto>) {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.findOne({
+        where: {
+          id: item.id
+        },
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
         }
-      },
-      relations: {
-        type: true,
-        subType: true,
-        style: true,
-        kind: true
+      });
     }
-    })
   }
 
-  findBySubTypeId(item: Partial<CreateItemDto>) {
-    return this.repository.find({
-      where: {
-        type: {
-          id: item.typeId
-        },
-        subType: {
-          id: item.subTypeId
-        }
-      },
-      relations: {
-        type: true,
-        subType: true,
-        style: true,
-        kind: true
-    }
-    });
-  }
-  
+  async findByType(item: Partial<CreateItemDto>) {
 
-  findByStyleId(item: Partial<CreateItemDto>) {
-    return this.repository.find({
-      where: {
-        type: {
-          id: item.typeId
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        where: {
+          type: {
+            id: item.typeId
+          }
         },
-        subType: {
-          id: item.subTypeId
-        },
-        style: {
-          id: item.styleId
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
         }
-      },
-      relations: {
-        type: true,
-        subType: true,
-        style: true,
-        kind: true
+      })
     }
-    });
   }
 
-  findByKindId(item: Partial<CreateItemDto>) {
-    return this.repository.find({
-      where: {
-        type: {
-          id: item.typeId
+  async findBySubTypeId(item: Partial<CreateItemDto>) {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        where: {
+          type: {
+            id: item.typeId
+          },
+          subType: {
+            id: item.subTypeId
+          }
         },
-        subType: {
-          id: item.subTypeId
-        },
-        style: {
-          id: item.styleId
-        },
-        kind: {
-          id: item.kindId
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
         }
-      },
-      relations: {
-        type: true,
-        subType: true,
-        style: true,
-        kind: true
+      });
     }
-    });
+  }
+
+
+  async findByStyleId(item: Partial<CreateItemDto>) {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        where: {
+          type: {
+            id: item.typeId
+          },
+          subType: {
+            id: item.subTypeId
+          },
+          style: {
+            id: item.styleId
+          }
+        },
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
+        }
+      });
+    }
+  }
+
+  async findByKindId(item: Partial<CreateItemDto>) {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        where: {
+          type: {
+            id: item.typeId
+          },
+          subType: {
+            id: item.subTypeId
+          },
+          style: {
+            id: item.styleId
+          },
+          kind: {
+            id: item.kindId
+          }
+        },
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
+        }
+      });
+    }
   }
 
   async update(item: Partial<CreateItemDto>, updateItemDto: UpdateItemDto) {

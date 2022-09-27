@@ -1,13 +1,17 @@
-import { UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Cache } from 'cache-manager';
+
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 
 
 @Controller('item')
-@UseInterceptors(CacheInterceptor)
 export class ItemController {
-  constructor(private readonly itemService: ItemService) {}
+  constructor(
+    private readonly itemService: ItemService,
+    // @Inject(CACHE_MANAGER) private cacheManager: Cache
+    ) {}
 
   @Post()
   create(@Body() createItemDto: CreateItemDto) {
@@ -23,11 +27,19 @@ export class ItemController {
   findOne(@Param('id') item: Partial<CreateItemDto>) {
     return this.itemService.findOne(item);
   }
-
+  @UseInterceptors(CacheInterceptor)
   @Get('query/:typeId')
-  findByType(@Param('typeId') item: Partial<CreateItemDto>) {
-    return this.itemService.findByType(item);
+   async findByType(@Param('typeId') item: Partial<CreateItemDto>) {
+    // const cahedData = await this.cacheManager.get('sort by type')
+    //   if (cahedData) {
+    //     console.log('getting data from cache!!!');
+    //     return cahedData
+    //   } else {
+    const data = await this.itemService.findByType(item)
+    console.log('getting data from DB(((')
+    return data
   }
+  //}
 
   @Get('query/:typeId/:subTypeId')
   findBySubTypeId(@Param() @Query('item') item: Partial<CreateItemDto>) {

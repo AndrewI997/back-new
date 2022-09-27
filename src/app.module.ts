@@ -38,6 +38,7 @@ import { DBModule } from './db.module';
       store: redisStore,
       host: 'localhost',
       port: 6379,
+      ttl: 20,
     }),
     DBModule,
     ItemModule,
