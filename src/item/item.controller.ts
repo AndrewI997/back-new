@@ -7,10 +7,10 @@ import { UpdateItemDto } from './dto/update-item.dto';
 
 
 @Controller('item')
+@UseInterceptors(CacheInterceptor)
 export class ItemController {
   constructor(
     private readonly itemService: ItemService,
-    // @Inject(CACHE_MANAGER) private cacheManager: Cache
     ) {}
 
   @Post()
@@ -27,7 +27,7 @@ export class ItemController {
   findOne(@Param('id') item: Partial<CreateItemDto>) {
     return this.itemService.findOne(item);
   }
-  @UseInterceptors(CacheInterceptor)
+ 
   @Get('query/:typeId')
    async findByType(@Param('typeId') item: Partial<CreateItemDto>) {
     // const cahedData = await this.cacheManager.get('sort by type')

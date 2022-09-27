@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/common/cache';
 import { ClientOpts } from 'redis';
@@ -23,22 +23,17 @@ import { DBModule } from './db.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true, 
-      // validationSchema: Joi.object({
-      //   PG_HOST: Joi.string().required(),
-      //   PG_PORT: Joi.number().required(),
-      //   PG_USERNAME: Joi.string().required(),
-      //   PG_PASS: Joi.string().required(),
-      //   PG_DBNAME: Joi.string().required(),
-      // })
-    }),
+    ConfigModule.forRoot(),
     CacheModule.register<ClientOpts>({
-      isGlobal: true,
-      store: redisStore,
-      host: 'localhost',
-      port: 6379,
-      ttl: 20,
+      // imports: [ConfigModule],
+      // inject: [ConfigService],
+      // useFactory: async (config: ConfigService) => ({
+        isGlobal: true,
+        store: redisStore,
+        host: 'localhost',//config.get('REDIS_HOST'),
+        port: 6379,//config.get('REDIS_PORT'),
+        ttl: 20,
+      // })
     }),
     DBModule,
     ItemModule,
