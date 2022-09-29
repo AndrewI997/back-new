@@ -8,7 +8,7 @@ import { ItemSubTypeEntity } from './item-subtype/entities/item-subtype.entity';
 import { ItemKindEntity } from './item-kind/entities/item-kind.entity';
 import { ItemStyleEntity } from './item-style/entities/item-style.entity';
 import { PhoneNumberEntity } from './phone-numbers/entities/phone-number.entity';
-import { AdminEntity } from './admin/entities/admin.entity';
+import { UserEntity } from './user/entities/user.entity';
 
 @Module({
     imports: [
@@ -30,7 +30,7 @@ import { AdminEntity } from './admin/entities/admin.entity';
                     ItemKindEntity,
                     ItemStyleEntity,
                     PhoneNumberEntity,
-                    AdminEntity,
+                    UserEntity
                 ],
                 synchronize: true,
             })

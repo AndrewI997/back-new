@@ -29,17 +29,9 @@ export class ItemController {
   }
  
   @Get('query/:typeId')
-   async findByType(@Param('typeId') item: Partial<CreateItemDto>) {
-    // const cahedData = await this.cacheManager.get('sort by type')
-    //   if (cahedData) {
-    //     console.log('getting data from cache!!!');
-    //     return cahedData
-    //   } else {
-    const data = await this.itemService.findByType(item)
-    console.log('getting data from DB(((')
-    return data
+   findByType(@Param() @Query('item') item: Partial<CreateItemDto>) {
+    return this.itemService.findByType(item)
   }
-  //}
 
   @Get('query/:typeId/:subTypeId')
   findBySubTypeId(@Param() @Query('item') item: Partial<CreateItemDto>) {

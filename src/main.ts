@@ -11,7 +11,7 @@ async function bootstrap() {
   const config = app.get<ConfigService>(ConfigService);
   const port = Number(config.get('API_PORT'))
 
-  await app.listen(port || 3000);
+  await app.listen(port);
   console.log('APP ON PORT:' + port + '!!!')
 }
 
