@@ -17,9 +17,10 @@ import { ItemStyleModule } from './item-style/item-style.module';
 import { PhoneNumbersModule } from './phone-numbers/phone-numbers.module';
 import { PhotoGalleryModule } from './photo-gallery/photo-gallery.module';
 import { AuthModule } from './auth/auth.module';
-import { AdminModule } from './admin/admin.module';
+import { UserModule } from './user/user.module';
 
 import { DBModule } from './db.module';
+
 
 @Module({
   imports: [
@@ -44,7 +45,7 @@ import { DBModule } from './db.module';
     PhoneNumbersModule,
     PhotoGalleryModule,
     AuthModule,
-    AdminModule
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
