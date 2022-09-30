@@ -3,7 +3,7 @@ import { ItemStyleService } from './item-style.service';
 import { CreateItemStyleDto } from './dto/create-item-style.dto';
 import { UpdateItemStyleDto } from './dto/update-item-style.dto';
 
-@Controller('style')
+@Controller('itemstyle')
 export class ItemStyleController {
   constructor(private readonly itemStyleService: ItemStyleService) {}
 

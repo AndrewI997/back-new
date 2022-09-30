@@ -18,34 +18,54 @@ export class ItemController {
     return this.itemService.create(createItemDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.itemService.findAll();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   findOne(@Param('id') item: Partial<CreateItemDto>) {
     return this.itemService.findOne(item);
   }
  
-  @Get('query/:typeId')
+  @Get('all/:typeId')
    findByType(@Param() @Query('item') item: Partial<CreateItemDto>) {
     return this.itemService.findByType(item)
   }
 
-  @Get('query/:typeId/:subTypeId')
+  @Get('all/:typeId/:subTypeId')
   findBySubTypeId(@Param() @Query('item') item: Partial<CreateItemDto>) {
     return this.itemService.findBySubTypeId(item);
   }
 
-  @Get('query/:typeId/:subTypeId/:kindId')
+  @Get('all/:typeId/:subTypeId/:styleId')
+  findByStyleId(@Param() @Query('item') item: Partial<CreateItemDto> ) {
+    return this.itemService.findByStyleId(item);
+  }
+
+  @Get('all/:typeId/:subTypeId/:styleId/:kindId')
   findByKindId(@Param() @Query('item') item: Partial<CreateItemDto> ) {
     return this.itemService.findByKindId(item);
   }
 
-  @Get('query/:typeId/:subTypeId/:kindId/:styleId')
-  findByStyleId(@Param() @Query('item') item: Partial<CreateItemDto> ) {
-    return this.itemService.findByStyleId(item);
+  @Get('typestyle/:typeId/:styleId')
+  findByTypeStyleId(@Param() @Query('item') item: Partial<CreateItemDto>) {
+    return this.itemService.findByTypeStyleId(item);
+  }
+
+  @Get('subtype/:subTypeId')
+  findByTypeSubTypeId(@Param() @Query('item') item: Partial<CreateItemDto>) {
+    return this.itemService.findByTypeSubTypeId(item);
+  }
+
+  @Get('subtypestyle/:subTypeId/:styleId')
+  findByTypeSubTypeStyleId(@Param() @Query('item') item: Partial<CreateItemDto>) {
+    return this.itemService.findByTypeSubTypeStyleId(item);
+  }
+
+  @Get('style/:styleId')
+  findStyleByStyleId(@Param() @Query('item') item: Partial<CreateItemDto>) {
+    return this.itemService.findStyleByStyleId(item);
   }
 
   @Patch(':id')

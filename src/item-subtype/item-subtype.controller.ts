@@ -3,7 +3,7 @@ import { ItemSubtypeService } from './item-subtype.service';
 import { CreateItemSubtypeDto } from './dto/create-item-subtype.dto';
 import { UpdateItemSubtypeDto } from './dto/update-item-subtype.dto';
 
-@Controller('subtype')
+@Controller('itemsubtype')
 export class ItemSubtypeController {
   constructor(private readonly ItemSubtypeService: ItemSubtypeService) {}
 
