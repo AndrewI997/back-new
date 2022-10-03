@@ -6,7 +6,6 @@ import { Cache } from 'cache-manager';
 import { ItemEntity } from './entities/item.entity'
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { number } from '@hapi/joi';
 
 @Injectable()
 export class ItemService {
@@ -78,6 +77,30 @@ export class ItemService {
   }
 
 
+  async findBySubTypeId(item: Partial<CreateItemDto>) {
+    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
+    if (cahedData) {
+      return cahedData
+    } else {
+      return await this.repository.find({
+        where: {
+          type: {
+            id: item.typeId
+          },
+          subType: {
+            id: item.subTypeId
+          }
+        },
+        relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
+        }
+      });
+    }
+  }
+
   async findByTypeStyleId(item: Partial<CreateItemDto>) {
 
     const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
@@ -103,30 +126,6 @@ export class ItemService {
     }
   }
 
-
-  async findBySubTypeId(item: Partial<CreateItemDto>) {
-    const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
-    if (cahedData) {
-      return cahedData
-    } else {
-      return await this.repository.find({
-        where: {
-          type: {
-            id: item.typeId
-          },
-          subType: {
-            id: item.subTypeId
-          }
-        },
-        relations: {
-          type: true,
-          subType: true,
-          style: true,
-          kind: true
-        }
-      });
-    }
-  }
 
   async findByTypeSubTypeId(item: Partial<CreateItemDto>) {
     const cahedData = await this.cacheManager.store.get<CreateItemDto>(item)
