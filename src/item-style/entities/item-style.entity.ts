@@ -10,7 +10,4 @@ export class ItemStyleEntity {
   @Column()
   name: string;
 
-//   @OneToMany(() => ItemEntity, item => item.style)
-//   items: ItemEntity[]
-
 }
