@@ -6,22 +6,17 @@ import { Cache } from 'cache-manager';
 import { ItemEntity } from './entities/item.entity'
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { FileManagerService } from 'src/file-manager/file-manager.service';
 
 @Injectable()
 export class ItemService {
   constructor(
     @InjectRepository(ItemEntity)
     public repository: Repository<ItemEntity>,
-    private fileManager: FileManagerService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
-  async create(createItemDto: CreateItemDto, img: any) {
-    const fileName = this.fileManager.createFile(img)
-
-    const item = await this.repository.save({...createItemDto, img})
-
+  async create(createItemDto: CreateItemDto, images: any) {
+    const item = await this.repository.save({...createItemDto, images})
     return item
   }
 

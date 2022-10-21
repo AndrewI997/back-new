@@ -22,8 +22,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
 
 import { DBModule } from './db.module';
+import { MulterModule } from '@nestjs/platform-express';
 import { FileManagerModule } from './file-manager/file-manager.module';
-import { FileManagerService } from './file-manager/file-manager.service';
 
 
 @Module({
@@ -40,9 +40,14 @@ import { FileManagerService } from './file-manager/file-manager.service';
         ttl: 20,
       // })
     }),
+    
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, 'static'),
     }),
+    MulterModule.register({
+      dest: './uploads',
+    }),
+    FileManagerModule,
     DBModule,
     ItemModule,
     ItemTypeModule,
@@ -56,7 +61,7 @@ import { FileManagerService } from './file-manager/file-manager.service';
     // FileManagerModule,
   ],
   controllers: [AppController],
-  providers: [AppService, FileManagerService],
+  providers: [AppService],
 })
 
 export class AppModule { }

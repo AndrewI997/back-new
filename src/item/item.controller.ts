@@ -1,10 +1,13 @@
-import { CACHE_MANAGER, Inject, UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFile } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
+
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../file-manager/file-manager.utils';
 
 
 @Controller('item')
@@ -14,12 +17,41 @@ export class ItemController {
     private readonly itemService: ItemService,
   ) { }
 
+  // @Post()
+  // @UseInterceptors(
+  //   FilesInterceptor('files[]', 20, {
+  //     storage: diskStorage({
+  //       filename: editFileName,
+  //     })
+  //   })
+  // )
+  // logFiles(@UploadedFiles() images, @Body() fileDto: FileDto) {
+  //   console.log(images);
+  //   console.log(fileDto);
+  //   return 'Done';
+  // }
+
   @Post()
-  @UseInterceptors(FileInterceptor('img'))
-  create(@Body() createItemDto: CreateItemDto,
-         @UploadedFile() img) {
-    return this.itemService.create(createItemDto, img);
-  }
+  @UseInterceptors(
+  FilesInterceptor('img', 10, {
+    storage: diskStorage({
+      destination: './static',
+      filename: editFileName,
+    })
+  }))
+  
+  async create(@Body() createItemDto: CreateItemDto,
+         @UploadedFiles() files) {
+          const images = [];
+          files.forEach(img => {
+            const fileReponse = {
+              filename: img.filename,
+            };
+            images.push(fileReponse);
+          });
+          return this.itemService.create(createItemDto, images)
+
+        }
 
   @Get('all')
   findAll() {
