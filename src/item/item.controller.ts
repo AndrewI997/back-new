@@ -33,7 +33,7 @@ export class ItemController {
 
   @Post()
   @UseInterceptors(
-  FilesInterceptor('img', 10, {
+  FilesInterceptor('images', 10, {
     storage: diskStorage({
       destination: './static',
       filename: editFileName,
@@ -103,13 +103,13 @@ export class ItemController {
     return this.itemService.findStyleByStyleId(item);
   }
 
-  @Patch(':id')
-  update(@Param('id') item: Partial<CreateItemDto>, @Body() updateItemDto: UpdateItemDto) {
-    return this.itemService.update(item, updateItemDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') item: Partial<CreateItemDto>, @Body() updateItemDto: UpdateItemDto) {
+  //   return this.itemService.update(item, updateItemDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') item: Partial<CreateItemDto>) {
-    return this.itemService.remove(item);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') item: Partial<CreateItemDto>) {
+  //   return this.itemService.remove(item);
+  // }
 }

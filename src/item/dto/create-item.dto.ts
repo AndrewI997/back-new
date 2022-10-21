@@ -7,7 +7,6 @@ export class CreateItemDto {
 
     description?: string;
 
-
     typeId: number;
 
     subTypeId: number;
@@ -16,6 +15,6 @@ export class CreateItemDto {
 
     styleId?: number;
 
-  images: string[]
+  images?: string[]
     
 }

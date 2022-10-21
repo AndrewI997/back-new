@@ -30,7 +30,8 @@ export class ItemService {
           type: true,
           subType: true,
           style: true,
-          kind: true
+          kind: true,
+          // images: true
         },
       });
     }
@@ -49,7 +50,7 @@ export class ItemService {
           type: true,
           subType: true,
           style: true,
-          kind: true
+          kind: true,
         }
       });
     }
@@ -253,21 +254,21 @@ export class ItemService {
     }
   }
 
-  async update(item: Partial<CreateItemDto>, updateItemDto: UpdateItemDto) {
-    const itemById = this.findOne(item)
-    if (itemById) {
-      await this.repository.update(item, updateItemDto);
-    } else {
-      throw new HttpException('', HttpStatus.BAD_REQUEST)
-    };
-  }
+  // async update(item: Partial<CreateItemDto>, updateItemDto: UpdateItemDto) {
+  //   const itemById = this.findOne(item)
+  //   if (itemById) {
+  //     await this.repository.update(item, updateItemDto);
+  //   } else {
+  //     throw new HttpException('', HttpStatus.BAD_REQUEST)
+  //   };
+  // }
 
-  async remove(item: Partial<CreateItemDto>) {
-    const itemById = this.findOne(item)
-    if (itemById) {
-      await this.repository.delete(item);;
-    } else {
-      throw new HttpException('', HttpStatus.BAD_REQUEST)
-    };
-  }
+  // async remove(item: Partial<CreateItemDto>) {
+  //   const itemById = this.findOne(item)
+  //   if (itemById) {
+  //     await this.repository.delete(item);;
+  //   } else {
+  //     throw new HttpException('', HttpStatus.BAD_REQUEST)
+  //   };
+  // }
 }

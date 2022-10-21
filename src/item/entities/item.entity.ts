@@ -19,6 +19,9 @@ export class ItemEntity {
     @Column({ nullable: true })
     description?: string;
 
+    @Column({type: 'text', array: true, nullable: true})
+    images: string[];
+
     @ManyToOne(() => ItemTypeEntity, type => type.id)
     type: ItemTypeEntity
 
@@ -31,7 +34,6 @@ export class ItemEntity {
     @ManyToOne(() => ItemStyleEntity, style => style.id, { nullable: true })
     style: ItemStyleEntity
 
-    @Column({type: 'simple-array', array: true, nullable: true})
-    img: string[];
+    
 
 }

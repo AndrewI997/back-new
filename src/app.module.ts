@@ -23,7 +23,6 @@ import * as path from 'path';
 
 import { DBModule } from './db.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { FileManagerModule } from './file-manager/file-manager.module';
 
 
 @Module({
@@ -45,9 +44,8 @@ import { FileManagerModule } from './file-manager/file-manager.module';
       rootPath: path.resolve(__dirname, 'static'),
     }),
     MulterModule.register({
-      dest: './uploads',
+      dest: './static',
     }),
-    FileManagerModule,
     DBModule,
     ItemModule,
     ItemTypeModule,

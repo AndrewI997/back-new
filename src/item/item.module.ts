@@ -7,10 +7,10 @@ import { ItemEntity } from './entities/item.entity';
 import { ItemService } from './item.service';
 import { ItemController } from './item.controller';
 // import { FileManagerService } from 'src/file-manager/file-manager.service';
-import { FileManagerModule } from 'src/file-manager/file-manager.module';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ItemEntity]), CacheModule.register(), forwardRef(() => FileManagerModule)],
+  imports: [TypeOrmModule.forFeature([ItemEntity]), CacheModule.register()],
   controllers: [ItemController],
   providers: [ItemService]
 })
