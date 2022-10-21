@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Index, OneToMany } from 'typeorm';
 
 import { ItemTypeEntity } from 'src/item-type/entities/item-type.entity';
 import { ItemSubTypeEntity } from 'src/item-subtype/entities/item-subtype.entity';
@@ -19,20 +19,19 @@ export class ItemEntity {
     @Column({ nullable: true })
     description?: string;
 
-    @Index()
     @ManyToOne(() => ItemTypeEntity, type => type.id)
     type: ItemTypeEntity
 
-    @Index()
     @ManyToOne(() => ItemSubTypeEntity, subType => subType.id)
     subType: ItemSubTypeEntity
 
-    @Index()
     @ManyToOne(() => ItemKindEntity, kind => kind.id, { nullable: true })
     kind: ItemKindEntity
 
-    @Index()
     @ManyToOne(() => ItemStyleEntity, style => style.id, { nullable: true })
     style: ItemStyleEntity
+
+    @Column({type: 'simple-array', array: true, nullable: true})
+    img: string[];
 
 }

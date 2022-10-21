@@ -1,9 +1,10 @@
-import { CACHE_MANAGER, Inject, UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, UseInterceptors, CacheInterceptor, Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFile } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
 import { ItemService } from './item.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('item')
@@ -11,11 +12,13 @@ import { UpdateItemDto } from './dto/update-item.dto';
 export class ItemController {
   constructor(
     private readonly itemService: ItemService,
-    ) {}
+  ) { }
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto) {
-    return this.itemService.create(createItemDto);
+  @UseInterceptors(FileInterceptor('img'))
+  create(@Body() createItemDto: CreateItemDto,
+         @UploadedFile() img) {
+    return this.itemService.create(createItemDto, img);
   }
 
   @Get('all')
@@ -27,9 +30,9 @@ export class ItemController {
   findOne(@Param('id') item: Partial<CreateItemDto>) {
     return this.itemService.findOne(item);
   }
- 
+
   @Get('all/:typeId')
-   findByType(@Param() @Query('item') item: Partial<CreateItemDto>) {
+  findByType(@Param() @Query('item') item: Partial<CreateItemDto>) {
     return this.itemService.findByType(item)
   }
 
@@ -39,12 +42,12 @@ export class ItemController {
   }
 
   @Get('all/:typeId/:subTypeId/:styleId')
-  findByStyleId(@Param() @Query('item') item: Partial<CreateItemDto> ) {
+  findByStyleId(@Param() @Query('item') item: Partial<CreateItemDto>) {
     return this.itemService.findByStyleId(item);
   }
 
   @Get('all/:typeId/:subTypeId/:styleId/:kindId')
-  findByKindId(@Param() @Query('item') item: Partial<CreateItemDto> ) {
+  findByKindId(@Param() @Query('item') item: Partial<CreateItemDto>) {
     return this.itemService.findByKindId(item);
   }
 

@@ -18,8 +18,12 @@ import { PhoneNumbersModule } from './phone-numbers/phone-numbers.module';
 import { PhotoGalleryModule } from './photo-gallery/photo-gallery.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 import { DBModule } from './db.module';
+import { FileManagerModule } from './file-manager/file-manager.module';
+import { FileManagerService } from './file-manager/file-manager.service';
 
 
 @Module({
@@ -36,6 +40,9 @@ import { DBModule } from './db.module';
         ttl: 20,
       // })
     }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
+    }),
     DBModule,
     ItemModule,
     ItemTypeModule,
@@ -45,10 +52,11 @@ import { DBModule } from './db.module';
     PhoneNumbersModule,
     PhotoGalleryModule,
     AuthModule,
-    UserModule
+    UserModule,
+    // FileManagerModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileManagerService],
 })
 
 export class AppModule { }
