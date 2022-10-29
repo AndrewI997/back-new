@@ -17,41 +17,25 @@ export class ItemController {
     private readonly itemService: ItemService,
   ) { }
 
-  // @Post()
-  // @UseInterceptors(
-  //   FilesInterceptor('files[]', 20, {
-  //     storage: diskStorage({
-  //       filename: editFileName,
-  //     })
-  //   })
-  // )
-  // logFiles(@UploadedFiles() images, @Body() fileDto: FileDto) {
-  //   console.log(images);
-  //   console.log(fileDto);
-  //   return 'Done';
-  // }
-
   @Post()
   @UseInterceptors(
-  FilesInterceptor('images', 10, {
-    storage: diskStorage({
-      destination: './static',
-      filename: editFileName,
-    })
-  }))
-  
+    FilesInterceptor('images', 10, {
+      storage: diskStorage({
+        destination: './static',
+        filename: editFileName,
+      })
+    }))
   async create(@Body() createItemDto: CreateItemDto,
-         @UploadedFiles() files) {
-          const images = [];
-          files.forEach(img => {
-            const fileReponse = {
-              filename: img.filename,
-            };
-            images.push(fileReponse);
-          });
-          return this.itemService.create(createItemDto, images)
-
-        }
+    @UploadedFiles() files) {
+    const images = [];
+    files.forEach(img => {
+      const fileReponse = {
+        filename: img.filename,
+      };
+      images.push(fileReponse);
+    });
+    return this.itemService.create(createItemDto, images)
+  }
 
   @Get('all')
   findAll() {
