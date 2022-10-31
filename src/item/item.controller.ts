@@ -17,6 +17,9 @@ export class ItemController {
     private readonly itemService: ItemService,
   ) { }
 
+
+
+
   @Post()
   @UseInterceptors(
     FilesInterceptor('images', 10, {
@@ -25,17 +28,20 @@ export class ItemController {
         filename: editFileName,
       })
     }))
+
   async create(@Body() createItemDto: CreateItemDto,
     @UploadedFiles() files) {
+      console.log(files)
     const images = [];
     files.forEach(img => {
-      const fileReponse = {
-        filename: img.filename,
-      };
-      images.push(fileReponse);
+      images.push(img.filename);
     });
+
     return this.itemService.create(createItemDto, images)
   }
+
+
+
 
   @Get('all')
   findAll() {

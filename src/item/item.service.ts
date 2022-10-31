@@ -16,6 +16,7 @@ export class ItemService {
   ) { }
 
   async create(createItemDto: CreateItemDto, images: any) {
+    // console.log(images)
     const item = await this.repository.save({...createItemDto, images})
     return item
   }
