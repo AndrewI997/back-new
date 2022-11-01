@@ -6,7 +6,7 @@ import { forwardRef } from '@nestjs/common';
 import { ItemEntity } from './entities/item.entity';
 import { ItemService } from './item.service';
 import { ItemController } from './item.controller';
-// import { FileManagerService } from 'src/file-manager/file-manager.service';
+// import { FileService } from 'src/file-manager/file.service';
 
 
 @Module({

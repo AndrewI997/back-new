@@ -8,6 +8,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../file-manager/file-manager.utils';
+import * as path from 'path'
 
 
 @Controller('item')
@@ -22,16 +23,16 @@ export class ItemController {
 
   @Post()
   @UseInterceptors(
-    FilesInterceptor('images', 10, {
+    FilesInterceptor('images', 10  , {
       storage: diskStorage({
-        destination: './static',
+        destination: './dist/static',
         filename: editFileName,
       })
     }))
 
   async create(@Body() createItemDto: CreateItemDto,
     @UploadedFiles() files) {
-      console.log(files)
+
     const images = [];
     files.forEach(img => {
       images.push(img.filename);

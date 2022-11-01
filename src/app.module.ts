@@ -25,6 +25,7 @@ import { DBModule } from './db.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -39,7 +40,6 @@ import { MulterModule } from '@nestjs/platform-express';
         ttl: 20,
       // })
     }),
-    
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, 'static'),
     }),
@@ -56,7 +56,7 @@ import { MulterModule } from '@nestjs/platform-express';
     PhotoGalleryModule,
     AuthModule,
     UserModule,
-    // FileManagerModule,
+    // FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

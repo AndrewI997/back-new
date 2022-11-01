@@ -7,6 +7,7 @@ import { ItemEntity } from './entities/item.entity'
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 
+
 @Injectable()
 export class ItemService {
   constructor(
@@ -17,6 +18,7 @@ export class ItemService {
 
   async create(createItemDto: CreateItemDto, images: any) {
     // console.log(images)
+    
     const item = await this.repository.save({...createItemDto, images})
     return item
   }
